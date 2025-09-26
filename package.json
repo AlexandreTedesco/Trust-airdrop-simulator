@@ -1,0 +1,15 @@
+
+{
+  "name": "trust-airdrop-simulator",
+  "version": "1.0.0",
+  "description": "$TRUST Airdrop Simulator pour Vibe Coding Contest",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server ./"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  },
+  "author": "BUIDLER",
+  "license": "MIT"
+}

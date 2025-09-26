@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>$TRUST Airdrop Simulator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f1724;
+      color: #e6eef8;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .card {
+      background: #0b1220;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #1e293b;
+    }
+
+    h1 {
+      color: #7c3aed;
+      margin-top: 0;
+    }
+
+    h2 {
+      color: #94a3b8;
+      font-size: 18px;
+      margin: 20px 0 10px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    @media(max-width:768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: 1px solid #374151;
+      background: #1e293b;
+      color: white;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #7c3aed;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 10px 5px 10px 0;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #6d28d9, #4338ca);
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 20px;
+      background: linear-gradient(135deg, #1e293b, #0f1724);
+      border-radius: 10px;
+      border: 1px solid #374151;
+    }
+
+    .big-result {
+      font-size: 24px;
+      font-weight: bold;
+      color: #7c3aed;
+      margin: 10px 0;
+    }
+
+    .rarity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .rarity-item {
+      background: #1e293b;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid #374151;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rarity-item:hover {
+      border-color: #7c3aed;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+    }
+
+    .rarity-item input {
+      width: 60px;
+      margin: 8px auto;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .rarity-label {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .rarity-image {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 8px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .rarity-item:hover .rarity-image {
+      border-color: #7c3aed;
+      transform: scale(1.1);
+    }
+
+    .rarity-count {
+      font-size: 11px;
+      color: #7c3aed;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .calculation-details {
+      background: linear-gradient(135deg, #0f1724, #1e293b);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      border: 1px solid #374151;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .calc-step {
+      margin: 12px 0;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, #1e293b, #0f1724);
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border-left: 4px solid #7c3aed;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .calc-step:hover {
+      background: linear-gradient(135deg, #1e293b, #374151);
+      transform: translateX(4px);
+    }
+
+    .calc-step-number {
+      color: #7c3aed;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .calc-step-title {
+      color: #e2e8f0;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .calc-step-value {
+      color: #10b981;
+      font-weight: bold;
+    }
+
+    .calc-step-formula {
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    .highlight {
+      color: #7c3aed;
+      font-weight: bold;
+    }
+
+    .muted {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .emoji {
+      font-size: 16px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class='container'>
+    <div class='card'>
+      <h1>🚀 $TRUST Airdrop Simulator</h1>
+      <p class='muted'>Simulator based on hierarchical + complete spectrum model. Calculate your $TRUST tokens according
+        to your Relics.</p>
+      <div style='background:#1e293b;padding:12px;border-radius:8px;margin-bottom:20px;border-left:4px solid #f59e0b;'>
+        <strong>⚠️ Disclaimer:</strong> This is a speculative simulator. All values (total IQ circulation, airdrop pool,
+        TGE price) are <strong>estimates only</strong> and not official data. Results are for educational purposes.
+      </div>
+
+      <div class='grid'>
+        <div>
+          <h2>📚 How it works</h2>
+          <div
+            style='background:#1e293b;padding:15px;border-radius:10px;margin-bottom:20px;border-left:4px solid #7c3aed;'>
+            <h3 style='color:#7c3aed;margin-top:0;font-size:16px;'>🎯 Calculation Formula</h3>
+            <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+              <strong>Step 1:</strong> Base tokens = (Your IQ ÷ Total IQ) × Airdrop Pool
+            </p>
+            <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+              <strong>Step 2:</strong> Add Relic bonuses to your IQ
+            </p>
+            <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+              <strong>Step 3:</strong> Apply collection bonus (2+ rarities)
+            </p>
+            <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+              <strong>Step 4:</strong> Final tokens = (Effective IQ ÷ Total IQ) × Pool
+            </p>
+          </div>
+
+          <div
+            style='background:#1e293b;padding:15px;border-radius:10px;margin-bottom:20px;border-left:4px solid #10b981;'>
+            <h3 style='color:#10b981;margin-top:0;font-size:16px;'>🔮 Relic Bonuses</h3>
+            <div style='display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:#cbd5e1;'>
+              <div>🔹 Common: +10k IQ</div>
+              <div>🟦 Rare: +20k IQ</div>
+              <div>🔮 Epic: +50k IQ</div>
+              <div>💠 Legendary: +100k IQ</div>
+              <div>🌋 Ancient: +200k IQ</div>
+              <div>✨ Mystic: +500k IQ</div>
+            </div>
+            <p style='margin:8px 0;font-size:12px;color:#94a3b8;'>
+              <strong>Collection Bonus:</strong> 2R = +10k | 3R = +25k | 4R = +50k | 5R = +100k | 6R = +200k
+            </p>
+          </div>
+
+          <h2>📊 Base Parameters</h2>
+          <label>Your base IQ points:</label>
+          <input type='number' id='userIQ' value='17000000' placeholder='Ex: 100000'>
+
+          <h2>🔮 Your Relics</h2>
+          <div class='rarity-grid'>
+            <div class='rarity-item'>
+              <img src='asset/common.png' alt='Common Relic' class='rarity-image'>
+              <div class='rarity-label'>🔹 Common</div>
+              <input type='number' id='common' min='0' value='0' placeholder='0'>
+              <div class='rarity-count' id='common-count'>0</div>
+            </div>
+            <div class='rarity-item'>
+              <img src='asset/rare.png' alt='Rare Relic' class='rarity-image'>
+              <div class='rarity-label'>🟦 Rare</div>
+              <input type='number' id='rare' min='0' value='0' placeholder='0'>
+              <div class='rarity-count' id='rare-count'>0</div>
+            </div>
+            <div class='rarity-item'>
+              <img src='asset/epic.png' alt='Epic Relic' class='rarity-image'>
+              <div class='rarity-label'>🔮 Epic</div>
+              <input type='number' id='epic' min='0' value='0' placeholder='0'>
+              <div class='rarity-count' id='epic-count'>0</div>
+            </div>
+            <div class='rarity-item'>
+              <img src='asset/legendary.png' alt='Legendary Relic' class='rarity-image'>
+              <div class='rarity-label'>💠 Legendary</div>
+              <input type='number' id='legendary' min='0' value='0' placeholder='0'>
+              <div class='rarity-count' id='legendary-count'>0</div>
+            </div>
+            <div class='rarity-item'>
+              <img src='asset/ancient.png' alt='Ancient Relic' class='rarity-image'>
+              <div class='rarity-label'>🌋 Ancient</div>
+              <input type='number' id='ancient' min='0' value='0' placeholder='0'>
+              <div class='rarity-count' id='ancient-count'>0</div>
+            </div>
+            <div class='rarity-item'>
+              <img src='asset/mystic.png' alt='Mystic Relic' class='rarity-image'>
+              <div class='rarity-label'>✨ Mystic</div>
+              <input type='number' id='mystic' min='0' value='0' placeholder='0'>
+              <div class='rarity-count' id='mystic-count'>0</div>
+            </div>
+          </div>
+
+          <label>Airdrop pool (TRUST tokens):</label>
+          <input type='number' id='pool' value='200000000' placeholder='200000000'>
+
+          <label>TGE price (USD):</label>
+          <input type='number' step='0.01' id='price' value='0.25' placeholder='0.25'>
+
+          <label>Total IQ in circulation (ESTIMATE):</label>
+          <input type='number' id='totalIQ' value='100000000000' placeholder='100000000000'>
+
+        </div>
+
+        <div>
+          <h2>📊 Result</h2>
+          <div class='result' id='result'>
+            <div class='big-result'>—</div>
+            <div class='muted'>Configure your parameters and click "Calculate"</div>
+          </div>
+
+          <div class='calculation-details' id='details' style='display:none;'>
+            <h3>🔍 Calculation Details</h3>
+            <div id='calcSteps'></div>
+          </div>
+
+          <div style='display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;'>
+            <button id='calc'>🎲 Calculate my airdrop</button>
+            <button id='reset'>🔄 Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Fixed IQ bonus system (more realistic)
+      const IQ_BONUSES = {
+        common: 10000,    // +10k IQ per Common
+        rare: 20000,     // +20k IQ per Rare
+        epic: 50000,     // +50k IQ per Epic
+        legendary: 100000, // +100k IQ per Legendary
+        ancient: 200000,  // +200k IQ per Ancient
+        mystic: 500000   // +500k IQ per Mystic
+      };
+
+      // Collection bonuses (for having multiple rarities)
+      const COLLECTION_BONUSES = {
+        two_rarities: 10000,    // +10k IQ for having 2 different rarities
+        three_rarities: 25000,  // +25k IQ for having 3 different rarities
+        four_rarities: 50000,   // +50k IQ for having 4 different rarities
+        five_rarities: 100000,  // +100k IQ for having 5 different rarities
+        six_rarities: 200000   // +200k IQ for having all 6 rarities
+      };
+
+      const RARITY_NAMES = {
+        common: 'Common',
+        rare: 'Rare',
+        epic: 'Epic',
+        legendary: 'Legendary',
+        ancient: 'Ancient',
+        mystic: 'Mystic'
+      };
+
+      const order = ['common', 'rare', 'epic', 'legendary', 'ancient', 'mystic'];
+
+      function getCounts() {
+        return {
+          common: Number(document.getElementById('common').value) || 0,
+          rare: Number(document.getElementById('rare').value) || 0,
+          epic: Number(document.getElementById('epic').value) || 0,
+          legendary: Number(document.getElementById('legendary').value) || 0,
+          ancient: Number(document.getElementById('ancient').value) || 0,
+          mystic: Number(document.getElementById('mystic').value) || 0
+        };
+      }
+
+      function countRarities(counts) {
+        return order.filter(r => counts[r] > 0).length;
+      }
+
+      function getCollectionBonus(counts) {
+        const rarityCount = countRarities(counts);
+        if (rarityCount === 6) return COLLECTION_BONUSES.six_rarities;
+        if (rarityCount === 5) return COLLECTION_BONUSES.five_rarities;
+        if (rarityCount === 4) return COLLECTION_BONUSES.four_rarities;
+        if (rarityCount === 3) return COLLECTION_BONUSES.three_rarities;
+        if (rarityCount === 2) return COLLECTION_BONUSES.two_rarities;
+        return 0;
+      }
+
+      function calculate() {
+        // Get input values
+        const userIQ = Number(document.getElementById('userIQ').value) || 0;
+        const pool = Number(document.getElementById('pool').value) || 0;
+        const price = Number(document.getElementById('price').value) || 0;
+        const totalIQ = Number(document.getElementById('totalIQ').value) || 1;
+        const counts = getCounts();
+
+        // Step-by-step calculations
+        const steps = [];
+
+        // Step 1: Base IQ
+        steps.push(`
+           <div class="calc-step">
+             <span class="calc-step-number">1️⃣</span>
+             <span class="calc-step-title">Base IQ points</span><br>
+             <span class="calc-step-formula">Your starting IQ</span><br>
+             <span class="calc-step-value">= ${userIQ.toLocaleString()}</span>
+           </div>
+         `);
+
+        // Step 2: Calculate IQ bonuses from Relics
+        let totalRelicBonus = 0;
+        const relicDetails = [];
+
+        order.forEach(rarity => {
+          const count = counts[rarity] || 0;
+          if (count > 0) {
+            const bonus = IQ_BONUSES[rarity] * count;
+            totalRelicBonus += bonus;
+            relicDetails.push(`${count}×${RARITY_NAMES[rarity]} (+${IQ_BONUSES[rarity].toLocaleString()} × ${count})`);
+          }
+        });
+
+        if (relicDetails.length > 0) {
+          steps.push(`
+             <div class="calc-step">
+               <span class="calc-step-number">2️⃣</span>
+               <span class="calc-step-title">Relic IQ bonuses</span><br>
+               <span class="calc-step-formula">${relicDetails.join(' + ')}</span><br>
+               <span class="calc-step-value">= +${totalRelicBonus.toLocaleString()}</span>
+             </div>
+           `);
+        } else {
+          steps.push(`
+             <div class="calc-step">
+               <span class="calc-step-number">2️⃣</span>
+               <span class="calc-step-title">Relic IQ bonuses</span><br>
+               <span class="calc-step-formula">No relics detected</span><br>
+               <span class="calc-step-value">= +0</span>
+             </div>
+           `);
+        }
+
+        // Step 3: Collection bonus
+        const collectionBonus = getCollectionBonus(counts);
+        const rarityCount = countRarities(counts);
+
+        if (collectionBonus > 0) {
+          steps.push(`
+             <div class="calc-step">
+               <span class="calc-step-number">3️⃣</span>
+               <span class="calc-step-title">Collection bonus</span><br>
+               <span class="calc-step-formula">${rarityCount} different rarities detected</span><br>
+               <span class="calc-step-value">= +${collectionBonus.toLocaleString()}</span>
+             </div>
+           `);
+        } else {
+          steps.push(`
+             <div class="calc-step">
+               <span class="calc-step-number">3️⃣</span>
+               <span class="calc-step-title">Collection bonus</span><br>
+               <span class="calc-step-formula">${rarityCount} different rarities (need 2+ for bonus)</span><br>
+               <span class="calc-step-value">= +0</span>
+             </div>
+           `);
+        }
+
+        // Step 4: Total effective IQ
+        const effectiveIQ = userIQ + totalRelicBonus + collectionBonus;
+        steps.push(`
+           <div class="calc-step">
+             <span class="calc-step-number">4️⃣</span>
+             <span class="calc-step-title">Total effective IQ</span><br>
+             <span class="calc-step-formula">${userIQ.toLocaleString()} + ${totalRelicBonus.toLocaleString()} + ${collectionBonus.toLocaleString()}</span><br>
+             <span class="calc-step-value">= ${effectiveIQ.toLocaleString()}</span>
+           </div>
+         `);
+
+        // Step 5: Calculate tokens
+        const tokens = (effectiveIQ / totalIQ) * pool;
+        steps.push(`
+           <div class="calc-step">
+             <span class="calc-step-number">5️⃣</span>
+             <span class="calc-step-title">Tokens calculation</span><br>
+             <span class="calc-step-formula">(${effectiveIQ.toLocaleString()} ÷ ${totalIQ.toLocaleString()}) × ${pool.toLocaleString()}</span><br>
+             <span class="calc-step-value">= ${tokens.toLocaleString(undefined, { maximumFractionDigits: 2 })} TRUST</span>
+           </div>
+         `);
+
+        // Step 6: USD value
+        const usd = tokens * price;
+        steps.push(`
+           <div class="calc-step">
+             <span class="calc-step-number">6️⃣</span>
+             <span class="calc-step-title">USD value calculation</span><br>
+             <span class="calc-step-formula">${tokens.toLocaleString(undefined, { maximumFractionDigits: 2 })} × $${price}</span><br>
+             <span class="calc-step-value">= $${usd.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
+           </div>
+         `);
+
+        // Display results
+        document.getElementById('result').innerHTML = `
+        <div class="big-result">${tokens.toLocaleString(undefined, { maximumFractionDigits: 2 })} TRUST</div>
+        <div style="font-size: 18px; color: #10b981; margin: 10px 0;">$${usd.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+        <div class="muted">Effective IQ: ${effectiveIQ.toLocaleString()} | Bonus: +${(totalRelicBonus + collectionBonus).toLocaleString()}</div>
+     `;
+
+        // Display details
+        document.getElementById('calcSteps').innerHTML = steps.join('');
+        document.getElementById('details').style.display = 'block';
+      }
+
+      function reset() {
+        document.getElementById('userIQ').value = '17000000';
+        document.getElementById('pool').value = '200000000';
+        document.getElementById('price').value = '0.25';
+        document.getElementById('totalIQ').value = '100000000000';
+        ['common', 'rare', 'epic', 'legendary', 'ancient', 'mystic'].forEach(id => {
+          document.getElementById(id).value = '0';
+        });
+        document.getElementById('result').innerHTML = `
+        <div class="big-result">—</div>
+        <div class="muted">Configure your parameters and click "Calculate"</div>
+    `;
+        document.getElementById('details').style.display = 'none';
+      }
+
+      // Update visual counters
+      function updateCounters() {
+        const counts = getCounts();
+        order.forEach(rarity => {
+          const countElement = document.getElementById(`${rarity}-count`);
+          const inputElement = document.getElementById(rarity);
+          const count = counts[rarity] || 0;
+
+          if (countElement) {
+            countElement.textContent = count;
+            countElement.style.color = count > 0 ? '#7c3aed' : '#94a3b8';
+          }
+
+          if (inputElement) {
+            inputElement.style.borderColor = count > 0 ? '#7c3aed' : 'rgba(255, 255, 255, 0.1)';
+          }
+        });
+      }
+
+      // Add event listeners to all relic inputs
+      order.forEach(rarity => {
+        const input = document.getElementById(rarity);
+        if (input) {
+          input.addEventListener('input', () => {
+            updateCounters();
+            calculate();
+          });
+        }
+      });
+
+      // Event listeners
+      document.getElementById('calc').addEventListener('click', calculate);
+      document.getElementById('reset').addEventListener('click', () => {
+        reset();
+        updateCounters();
+      });
+
+      // Initialize counters and calculate
+      updateCounters();
+      calculate();
+    </script>
+  </div>
+</body>
+
+</html>
