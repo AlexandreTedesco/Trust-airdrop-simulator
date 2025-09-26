@@ -385,6 +385,20 @@
       <h1>🚀 $TRUST Airdrop Simulator</h1>
       <p class='muted'>Simulator based on hierarchical + complete spectrum model. Calculate your $TRUST tokens according
         to your Relics.</p>
+
+      <!-- Mode Switch -->
+      <div
+        style='display: flex; align-items: center; gap: 15px; margin: 20px 0; padding: 15px; background: rgba(30, 41, 59, 0.8); border-radius: 10px; border-left: 4px solid #10b981;'>
+        <span style='color: #cbd5e1; font-weight: bold;'>Mode:</span>
+        <label style='display: flex; align-items: center; gap: 8px; cursor: pointer;'>
+          <input type='radio' name='mode' value='bonus' checked onchange='switchMode(this.value)'>
+          <span style='color: #10b981;'>🎯 Bonus Mode</span>
+        </label>
+        <label style='display: flex; align-items: center; gap: 8px; cursor: pointer;'>
+          <input type='radio' name='mode' value='multiplier' onchange='switchMode(this.value)'>
+          <span style='color: #7c3aed;'>⚡ Multiplier Mode</span>
+        </label>
+      </div>
       <div
         style='background:rgba(30, 41, 59, 0.8);padding:12px;border-radius:8px;margin-bottom:20px;border-left:4px solid #f59e0b;'>
         <strong>⚠️ Disclaimer:</strong> This is a speculative simulator. All values (total IQ circulation, airdrop pool,
@@ -399,34 +413,68 @@
             <summary style='cursor: pointer; font-weight: bold; color: #7c3aed; margin: 10px 0; font-size: 16px;'>
               📖 How it works
             </summary>
-            <div style='margin-top: 15px;'>
-              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-                <strong>Step 1:</strong> Base IQ = Your starting IQ points
-              </p>
-              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-                <strong>Step 2:</strong> Individual Relic bonuses (rarity + resonance + genesis)
-              </p>
-              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-                <strong>Step 3:</strong> Collection bonus (2+ different rarities)
-              </p>
-              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-                <strong>Step 4:</strong> Effective IQ = Base + Relic bonuses + Collection bonus
-              </p>
-              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-                <strong>Step 5:</strong> Final tokens = (Effective IQ ÷ Total IQ) × Airdrop Pool
-              </p>
-              <div
-                style='margin:15px 0;padding:10px;background:#0f172a;border-radius:8px;border-left:3px solid #7c3aed;'>
-                <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
-                  <strong>✨ Relic Formula:</strong> Base Bonus × (1 + Resonance/1000 × Resonance Multiplier) × Genesis
-                  Multiplier
+            <div style='margin-top: 15px;' id='how-it-works-content'>
+              <!-- Bonus Mode Content -->
+              <div id='bonus-mode-explanation'>
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 1:</strong> Base IQ = Your starting IQ points
                 </p>
-                <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
-                  <strong>Resonance:</strong> 0-1000 slider per Relic
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 2:</strong> Individual Relic bonuses (rarity + resonance + genesis)
                 </p>
-                <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
-                  <strong>Genesis:</strong> Checkbox per Relic for additional multiplier
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 3:</strong> Collection bonus (2+ different rarities)
                 </p>
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 4:</strong> Effective IQ = Base + Relic bonuses + Collection bonus
+                </p>
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 5:</strong> Final tokens = (Effective IQ ÷ Total IQ) × Airdrop Pool
+                </p>
+                <div
+                  style='margin:15px 0;padding:10px;background:#0f172a;border-radius:8px;border-left:3px solid #7c3aed;'>
+                  <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                    <strong>✨ Relic Formula:</strong> Base Bonus × (1 + Resonance/1000 × Resonance Multiplier) × Genesis
+                    Multiplier
+                  </p>
+                  <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                    <strong>Resonance:</strong> 0-1000 slider per Relic
+                  </p>
+                  <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                    <strong>Genesis:</strong> Checkbox per Relic for additional multiplier
+                  </p>
+                </div>
+              </div>
+
+              <!-- Multiplier Mode Content -->
+              <div id='multiplier-mode-explanation' style='display:none;'>
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 1:</strong> Base IQ = Your starting IQ points
+                </p>
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 2:</strong> Individual Relic multipliers (rarity + resonance + genesis)
+                </p>
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 3:</strong> Total multiplier = All Relic multipliers multiplied together
+                </p>
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 4:</strong> Effective IQ = Base IQ × Total Multiplier
+                </p>
+                <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                  <strong>Step 5:</strong> Final tokens = (Effective IQ ÷ Total IQ) × Airdrop Pool
+                </p>
+                <div
+                  style='margin:15px 0;padding:10px;background:#0f172a;border-radius:8px;border-left:3px solid #7c3aed;'>
+                  <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                    <strong>⚡ Relic Formula:</strong> Base Multiplier + (Resonance/1000 × 0.05) × Genesis Multiplier
+                  </p>
+                  <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                    <strong>Resonance:</strong> 0-1000 slider per Relic (max +0.05)
+                  </p>
+                  <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                    <strong>Genesis:</strong> Checkbox per Relic for ×1.1 multiplier
+                  </p>
+                </div>
               </div>
             </div>
           </details>
@@ -436,21 +484,46 @@
             <summary style='cursor: pointer; font-weight: bold; color: #10b981; margin: 10px 0; font-size: 16px;'>
               ✨ Relic System
             </summary>
-            <div style='margin-top: 15px;'>
-              <div style='display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:#cbd5e1;'>
-                <div>✨ Common: 10k base + resonance + genesis</div>
-                <div>✨ Rare: 20k base + resonance + genesis</div>
-                <div>✨ Epic: 50k base + resonance + genesis</div>
-                <div>✨ Legendary: 100k base + resonance + genesis</div>
-                <div>✨ Ancient: 200k base + resonance + genesis</div>
-                <div>✨ Mystic: 500k base + resonance + genesis</div>
+            <div style='margin-top: 15px;' id='relic-system-content'>
+              <!-- Bonus Mode Content -->
+              <div id='bonus-mode-relics'>
+                <div style='display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:#cbd5e1;'>
+                  <div>✨ Common: 10k base + resonance + genesis</div>
+                  <div>✨ Rare: 20k base + resonance + genesis</div>
+                  <div>✨ Epic: 50k base + resonance + genesis</div>
+                  <div>✨ Legendary: 100k base + resonance + genesis</div>
+                  <div>✨ Ancient: 200k base + resonance + genesis</div>
+                  <div>✨ Mystic: 500k base + resonance + genesis</div>
+                </div>
+                <div
+                  style='margin:10px 0;padding:8px;background:#0f172a;border-radius:6px;border-left:3px solid #10b981;'>
+                  <p style='margin:4px 0;font-size:12px;color:#94a3b8;'>
+                    <strong>Collection Bonus:</strong> 2 rarities = +10k | 3 rarities = +25k | 4 rarities = +50k | 5
+                    rarities = +100k | 6 rarities = +200k
+                  </p>
+                </div>
               </div>
-              <div
-                style='margin:10px 0;padding:8px;background:#0f172a;border-radius:6px;border-left:3px solid #10b981;'>
-                <p style='margin:4px 0;font-size:12px;color:#94a3b8;'>
-                  <strong>Collection Bonus:</strong> 2 rarities = +10k | 3 rarities = +25k | 4 rarities = +50k | 5
-                  rarities = +100k | 6 rarities = +200k
-                </p>
+
+              <!-- Multiplier Mode Content -->
+              <div id='multiplier-mode-relics' style='display:none;'>
+                <div style='display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:#cbd5e1;'>
+                  <div>⚡ Common: 1.01x base + resonance + genesis</div>
+                  <div>⚡ Rare: 1.02x base + resonance + genesis</div>
+                  <div>⚡ Epic: 1.05x base + resonance + genesis</div>
+                  <div>⚡ Legendary: 1.1x base + resonance + genesis</div>
+                  <div>⚡ Ancient: 1.2x base + resonance + genesis</div>
+                  <div>⚡ Mystic: 1.5x base + resonance + genesis</div>
+                </div>
+                <div
+                  style='margin:10px 0;padding:8px;background:#0f172a;border-radius:6px;border-left:3px solid #7c3aed;'>
+                  <p style='margin:4px 0;font-size:12px;color:#94a3b8;'>
+                    <strong>Multiplier Mode:</strong> All Relic multipliers are multiplied together (no collection
+                    bonus)
+                  </p>
+                  <p style='margin:4px 0;font-size:12px;color:#94a3b8;'>
+                    <strong>Resonance:</strong> Max +0.05 per Relic | <strong>Genesis:</strong> ×1.1 per Relic
+                  </p>
+                </div>
               </div>
             </div>
           </details>
@@ -531,6 +604,35 @@
       </div>
     </div>
     <script>
+      // Mode switch functionality
+      let currentMode = 'bonus';
+
+      function switchMode(mode) {
+        currentMode = mode;
+        console.log('Switched to:', mode);
+
+        // Update explanation sections
+        if (mode === 'bonus') {
+          document.getElementById('bonus-mode-explanation').style.display = 'block';
+          document.getElementById('multiplier-mode-explanation').style.display = 'none';
+          document.getElementById('bonus-mode-relics').style.display = 'block';
+          document.getElementById('multiplier-mode-relics').style.display = 'none';
+        } else {
+          document.getElementById('bonus-mode-explanation').style.display = 'none';
+          document.getElementById('multiplier-mode-explanation').style.display = 'block';
+          document.getElementById('bonus-mode-relics').style.display = 'none';
+          document.getElementById('multiplier-mode-relics').style.display = 'block';
+        }
+
+        // Update all relic bonus displays
+        individualRelics.forEach(relic => {
+          updateRelicBonus(relic.id);
+        });
+
+        // Recalculate with new mode
+        calculate();
+      }
+
       // Advanced Relic system with Resonance and Genesis
       const RELIC_TYPES = {
         common: {
@@ -712,15 +814,33 @@
         }
 
         // Step 4: Total effective IQ
-        const effectiveIQ = userIQ + totalRelicBonus + collectionBonus;
-        steps.push(`
-           <div class="calc-step">
-             <span class="calc-step-number">4️⃣</span>
-             <span class="calc-step-title">Total effective IQ</span><br>
-             <span class="calc-step-formula">${userIQ.toLocaleString()} + ${totalRelicBonus.toLocaleString()} + ${collectionBonus.toLocaleString()}</span><br>
-             <span class="calc-step-value">= ${effectiveIQ.toLocaleString()}</span>
-           </div>
-         `);
+        let effectiveIQ;
+        if (currentMode === 'bonus') {
+          effectiveIQ = userIQ + totalRelicBonus + collectionBonus;
+          steps.push(`
+             <div class="calc-step">
+               <span class="calc-step-number">4️⃣</span>
+               <span class="calc-step-title">Total effective IQ</span><br>
+               <span class="calc-step-formula">${userIQ.toLocaleString()} + ${totalRelicBonus.toLocaleString()} + ${collectionBonus.toLocaleString()}</span><br>
+               <span class="calc-step-value">= ${effectiveIQ.toLocaleString()}</span>
+             </div>
+           `);
+        } else {
+          // Multiplier mode: Apply multipliers to base IQ
+          const totalMultiplier = individualRelics.reduce((total, relic) => {
+            return total * calculateRelicBonus(relic.rarity, relic.resonance, relic.isGenesis);
+          }, 1.0);
+
+          effectiveIQ = userIQ * totalMultiplier;
+          steps.push(`
+             <div class="calc-step">
+               <span class="calc-step-number">4️⃣</span>
+               <span class="calc-step-title">Total effective IQ (Multiplier Mode)</span><br>
+               <span class="calc-step-formula">${userIQ.toLocaleString()} × ${totalMultiplier.toFixed(3)}</span><br>
+               <span class="calc-step-value">= ${Math.round(effectiveIQ).toLocaleString()}</span>
+             </div>
+           `);
+        }
 
         // Step 5: Calculate tokens
         const tokens = (effectiveIQ / totalIQ) * pool;
@@ -791,7 +911,10 @@
           if (resonanceElement) {
             resonanceElement.textContent = resonance;
           }
-          updateRelicBonus(relicId);
+          // Update bonus display with a small delay to ensure DOM is updated
+          setTimeout(() => {
+            updateRelicBonus(relicId);
+          }, 10);
           calculate();
         }
       }
@@ -800,7 +923,10 @@
         const relic = individualRelics.find(r => r.id === relicId);
         if (relic) {
           relic.isGenesis = isGenesis;
-          updateRelicBonus(relicId);
+          // Update bonus display with a small delay to ensure DOM is updated
+          setTimeout(() => {
+            updateRelicBonus(relicId);
+          }, 10);
           calculate();
         }
       }
@@ -811,7 +937,12 @@
           const bonus = calculateRelicBonus(relic.rarity, relic.resonance, relic.isGenesis);
           const bonusElement = document.getElementById(`bonus_${relicId}`);
           if (bonusElement) {
-            bonusElement.textContent = `+${Math.round(bonus).toLocaleString()} IQ`;
+            if (currentMode === 'bonus') {
+              bonusElement.textContent = `+${Math.round(bonus).toLocaleString()} IQ`;
+            } else {
+              // For multiplier mode, show the actual multiplier value
+              bonusElement.textContent = `${bonus.toFixed(3)}x`;
+            }
           }
         }
       }
@@ -846,7 +977,7 @@
               </div>
               <div class="relic-control">
                 <div class="control-label">Bonus</div>
-                <div class="relic-bonus" id="bonus_${relic.id}">+${Math.round(bonus).toLocaleString()} IQ</div>
+                <div class="relic-bonus" id="bonus_${relic.id}">${currentMode === 'bonus' ? '+' + Math.round(bonus).toLocaleString() + ' IQ' : bonus.toFixed(3) + 'x'}</div>
               </div>
               <button class="remove-relic" onclick="removeIndividualRelic('${relic.id}')">Remove</button>
             </div>
@@ -858,19 +989,51 @@
       // Calculate individual relic bonus with resonance and genesis
       function calculateRelicBonus(rarity, resonance, isGenesis) {
         const relic = RELIC_TYPES[rarity];
-        let bonus = relic.baseBonus;
 
-        // Apply resonance multiplier
-        if (resonance > 0) {
-          bonus *= (1 + (resonance / 1000) * relic.resonanceMultiplier);
+        if (currentMode === 'bonus') {
+          // Bonus Mode: Add IQ points
+          let bonus = relic.baseBonus;
+
+          // Apply resonance multiplier
+          if (resonance > 0) {
+            bonus *= (1 + (resonance / 1000) * relic.resonanceMultiplier);
+          }
+
+          // Apply genesis multiplier
+          if (isGenesis) {
+            bonus *= relic.genesisMultiplier;
+          }
+
+          return bonus;
+        } else {
+          // Multiplier Mode: Return multiplier value
+          let multiplier = 1.0;
+
+          // Base multiplier by rarity (very small to match bonus mode results)
+          const baseMultipliers = {
+            common: 1.01,
+            rare: 1.02,
+            epic: 1.05,
+            legendary: 1.1,
+            ancient: 1.2,
+            mystic: 1.5
+          };
+
+          multiplier = baseMultipliers[rarity];
+
+          // Apply resonance bonus (very small effect)
+          if (resonance > 0) {
+            multiplier += (resonance / 1000) * 0.05; // Max +0.05 from resonance
+          }
+
+          // Apply genesis bonus (small effect)
+          if (isGenesis) {
+            multiplier *= 1.1; // +10% for genesis
+          }
+
+          console.log(`Multiplier for ${rarity}: base=${baseMultipliers[rarity]}, resonance=${resonance}, genesis=${isGenesis}, final=${multiplier}`);
+          return multiplier;
         }
-
-        // Apply genesis multiplier
-        if (isGenesis) {
-          bonus *= relic.genesisMultiplier;
-        }
-
-        return bonus;
       }
 
       function reset() {
