@@ -15,7 +15,7 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1400px;
       margin: auto;
     }
 
@@ -40,7 +40,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
       gap: 20px;
     }
 
@@ -120,6 +120,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      min-height: 200px;
     }
 
     .rarity-item:hover {
@@ -151,6 +152,152 @@
       object-fit: cover;
       border: 2px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s ease;
+    }
+
+    .relic-advanced {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #374151;
+    }
+
+    .resonance-slider {
+      width: 100%;
+      margin: 5px 0;
+    }
+
+    .resonance-value {
+      font-size: 11px;
+      color: #fbbf24;
+      margin: 2px 0;
+    }
+
+    .genesis-checkbox {
+      margin: 5px 0;
+    }
+
+    .genesis-checkbox input {
+      margin-right: 5px;
+    }
+
+    .relic-bonus {
+      font-size: 11px;
+      color: #10b981;
+      font-weight: bold;
+      margin-top: 5px;
+      padding: 3px 6px;
+      background: rgba(16, 185, 129, 0.1);
+      border-radius: 4px;
+    }
+
+    /* New Individual Relic System */
+    .rarity-selectors {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .rarity-selector {
+      background: #1e293b;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #374151;
+      transition: all 0.3s ease;
+    }
+
+    .rarity-selector:hover {
+      border-color: #7c3aed;
+      transform: translateY(-2px);
+    }
+
+    .rarity-image-small {
+      width: 30px;
+      height: 30px;
+      margin: 0 auto 5px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .count-input {
+      width: 50px;
+      margin: 5px auto;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .individual-relics-container {
+      margin-top: 20px;
+    }
+
+    .individual-relic {
+      background: #1e293b;
+      padding: 15px;
+      border-radius: 12px;
+      margin: 10px 0;
+      border: 1px solid #374151;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .individual-relic:hover {
+      border-color: #7c3aed;
+      transform: translateY(-2px);
+    }
+
+    .relic-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 150px;
+    }
+
+    .relic-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .relic-name {
+      font-weight: bold;
+      color: #cbd5e1;
+    }
+
+    .relic-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+    }
+
+    .relic-control {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .control-label {
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
+    .remove-relic {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .remove-relic:hover {
+      background: #b91c1c;
     }
 
     .rarity-item:hover .rarity-image {
@@ -244,81 +391,110 @@
       <div class='grid'>
         <div>
           <h2>📚 How it works</h2>
-          <div
+          <details
             style='background:#1e293b;padding:15px;border-radius:10px;margin-bottom:20px;border-left:4px solid #7c3aed;'>
-            <h3 style='color:#7c3aed;margin-top:0;font-size:16px;'>🎯 Calculation Formula</h3>
-            <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-              <strong>Step 1:</strong> Base tokens = (Your IQ ÷ Total IQ) × Airdrop Pool
-            </p>
-            <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-              <strong>Step 2:</strong> Add Relic bonuses to your IQ
-            </p>
-            <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-              <strong>Step 3:</strong> Apply collection bonus (2+ rarities)
-            </p>
-            <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
-              <strong>Step 4:</strong> Final tokens = (Effective IQ ÷ Total IQ) × Pool
-            </p>
-          </div>
-
-          <div
-            style='background:#1e293b;padding:15px;border-radius:10px;margin-bottom:20px;border-left:4px solid #10b981;'>
-            <h3 style='color:#10b981;margin-top:0;font-size:16px;'>🔮 Relic Bonuses</h3>
-            <div style='display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:#cbd5e1;'>
-              <div>🔹 Common: +10k IQ</div>
-              <div>🟦 Rare: +20k IQ</div>
-              <div>🔮 Epic: +50k IQ</div>
-              <div>💠 Legendary: +100k IQ</div>
-              <div>🌋 Ancient: +200k IQ</div>
-              <div>✨ Mystic: +500k IQ</div>
+            <summary style='cursor: pointer; font-weight: bold; color: #7c3aed; margin: 10px 0; font-size: 16px;'>
+              📖 How it works
+            </summary>
+            <div style='margin-top: 15px;'>
+              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                <strong>Step 1:</strong> Base IQ = Your starting IQ points
+              </p>
+              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                <strong>Step 2:</strong> Individual Relic bonuses (rarity + resonance + genesis)
+              </p>
+              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                <strong>Step 3:</strong> Collection bonus (2+ different rarities)
+              </p>
+              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                <strong>Step 4:</strong> Effective IQ = Base + Relic bonuses + Collection bonus
+              </p>
+              <p style='margin:8px 0;font-size:14px;color:#cbd5e1;'>
+                <strong>Step 5:</strong> Final tokens = (Effective IQ ÷ Total IQ) × Airdrop Pool
+              </p>
+              <div
+                style='margin:15px 0;padding:10px;background:#0f172a;border-radius:8px;border-left:3px solid #7c3aed;'>
+                <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                  <strong>✨ Relic Formula:</strong> Base Bonus × (1 + Resonance/1000 × Resonance Multiplier) × Genesis
+                  Multiplier
+                </p>
+                <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                  <strong>Resonance:</strong> 0-1000 slider per Relic
+                </p>
+                <p style='margin:5px 0;font-size:13px;color:#94a3b8;'>
+                  <strong>Genesis:</strong> Checkbox per Relic for additional multiplier
+                </p>
+              </div>
             </div>
-            <p style='margin:8px 0;font-size:12px;color:#94a3b8;'>
-              <strong>Collection Bonus:</strong> 2R = +10k | 3R = +25k | 4R = +50k | 5R = +100k | 6R = +200k
-            </p>
-          </div>
+          </details>
+
+          <details
+            style='background:#1e293b;padding:15px;border-radius:10px;margin-bottom:20px;border-left:4px solid #10b981;'>
+            <summary style='cursor: pointer; font-weight: bold; color: #10b981; margin: 10px 0; font-size: 16px;'>
+              ✨ Relic System
+            </summary>
+            <div style='margin-top: 15px;'>
+              <div style='display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:#cbd5e1;'>
+                <div>✨ Common: 10k base + resonance + genesis</div>
+                <div>✨ Rare: 20k base + resonance + genesis</div>
+                <div>✨ Epic: 50k base + resonance + genesis</div>
+                <div>✨ Legendary: 100k base + resonance + genesis</div>
+                <div>✨ Ancient: 200k base + resonance + genesis</div>
+                <div>✨ Mystic: 500k base + resonance + genesis</div>
+              </div>
+              <div
+                style='margin:10px 0;padding:8px;background:#0f172a;border-radius:6px;border-left:3px solid #10b981;'>
+                <p style='margin:4px 0;font-size:12px;color:#94a3b8;'>
+                  <strong>Collection Bonus:</strong> 2 rarities = +10k | 3 rarities = +25k | 4 rarities = +50k | 5
+                  rarities = +100k | 6 rarities = +200k
+                </p>
+              </div>
+            </div>
+          </details>
 
           <h2>📊 Base Parameters</h2>
           <label>Your base IQ points:</label>
           <input type='number' id='userIQ' value='100000' placeholder='Ex: 100000'>
 
-          <h2>🔮 Your Relics</h2>
-          <div class='rarity-grid'>
-            <div class='rarity-item'>
-              <img src='asset/common.png' alt='Common Relic' class='rarity-image'>
-              <div class='rarity-label'>🔹 Common</div>
-              <input type='number' id='common' min='0' value='0' placeholder='0'>
-              <div class='rarity-count' id='common-count'>0</div>
+          <h2>✨ Your Relics</h2>
+
+          <!-- Relic Count Selectors -->
+          <div class='rarity-selectors'>
+            <div class='rarity-selector'>
+              <img src='asset/common.png' alt='Common Relic' class='rarity-image-small'>
+              <div class='rarity-label'>✨ Common</div>
+              <input type='number' id='common-count' min='0' value='0' placeholder='0' class='count-input'>
             </div>
-            <div class='rarity-item'>
-              <img src='asset/rare.png' alt='Rare Relic' class='rarity-image'>
-              <div class='rarity-label'>🟦 Rare</div>
-              <input type='number' id='rare' min='0' value='0' placeholder='0'>
-              <div class='rarity-count' id='rare-count'>0</div>
+            <div class='rarity-selector'>
+              <img src='asset/rare.png' alt='Rare Relic' class='rarity-image-small'>
+              <div class='rarity-label'>✨ Rare</div>
+              <input type='number' id='rare-count' min='0' value='0' placeholder='0' class='count-input'>
             </div>
-            <div class='rarity-item'>
-              <img src='asset/epic.png' alt='Epic Relic' class='rarity-image'>
-              <div class='rarity-label'>🔮 Epic</div>
-              <input type='number' id='epic' min='0' value='0' placeholder='0'>
-              <div class='rarity-count' id='epic-count'>0</div>
+            <div class='rarity-selector'>
+              <img src='asset/epic.png' alt='Epic Relic' class='rarity-image-small'>
+              <div class='rarity-label'>✨ Epic</div>
+              <input type='number' id='epic-count' min='0' value='0' placeholder='0' class='count-input'>
             </div>
-            <div class='rarity-item'>
-              <img src='asset/legendary.png' alt='Legendary Relic' class='rarity-image'>
-              <div class='rarity-label'>💠 Legendary</div>
-              <input type='number' id='legendary' min='0' value='0' placeholder='0'>
-              <div class='rarity-count' id='legendary-count'>0</div>
+            <div class='rarity-selector'>
+              <img src='asset/legendary.png' alt='Legendary Relic' class='rarity-image-small'>
+              <div class='rarity-label'>✨ Legendary</div>
+              <input type='number' id='legendary-count' min='0' value='0' placeholder='0' class='count-input'>
             </div>
-            <div class='rarity-item'>
-              <img src='asset/ancient.png' alt='Ancient Relic' class='rarity-image'>
-              <div class='rarity-label'>🌋 Ancient</div>
-              <input type='number' id='ancient' min='0' value='0' placeholder='0'>
-              <div class='rarity-count' id='ancient-count'>0</div>
+            <div class='rarity-selector'>
+              <img src='asset/ancient.png' alt='Ancient Relic' class='rarity-image-small'>
+              <div class='rarity-label'>✨ Ancient</div>
+              <input type='number' id='ancient-count' min='0' value='0' placeholder='0' class='count-input'>
             </div>
-            <div class='rarity-item'>
-              <img src='asset/mystic.png' alt='Mystic Relic' class='rarity-image'>
+            <div class='rarity-selector'>
+              <img src='asset/mystic.png' alt='Mystic Relic' class='rarity-image-small'>
               <div class='rarity-label'>✨ Mystic</div>
-              <input type='number' id='mystic' min='0' value='0' placeholder='0'>
-              <div class='rarity-count' id='mystic-count'>0</div>
+              <input type='number' id='mystic-count' min='0' value='0' placeholder='0' class='count-input'>
             </div>
+          </div>
+
+          <!-- Individual Relics Container -->
+          <div id='individual-relics' class='individual-relics-container'>
+            <!-- Individual relics will be dynamically added here -->
           </div>
 
           <label>Airdrop pool (TRUST tokens):</label>
@@ -352,14 +528,38 @@
       </div>
     </div>
     <script>
-      // Fixed IQ bonus system (more realistic)
-      const IQ_BONUSES = {
-        common: 10000,    // +10k IQ per Common
-        rare: 20000,     // +20k IQ per Rare
-        epic: 50000,     // +50k IQ per Epic
-        legendary: 100000, // +100k IQ per Legendary
-        ancient: 200000,  // +200k IQ per Ancient
-        mystic: 500000   // +500k IQ per Mystic
+      // Advanced Relic system with Resonance and Genesis
+      const RELIC_TYPES = {
+        common: {
+          baseBonus: 10000,
+          resonanceMultiplier: 1.0,
+          genesisMultiplier: 1.5
+        },
+        rare: {
+          baseBonus: 20000,
+          resonanceMultiplier: 1.2,
+          genesisMultiplier: 1.5
+        },
+        epic: {
+          baseBonus: 50000,
+          resonanceMultiplier: 1.5,
+          genesisMultiplier: 1.5
+        },
+        legendary: {
+          baseBonus: 100000,
+          resonanceMultiplier: 2.0,
+          genesisMultiplier: 1.5
+        },
+        ancient: {
+          baseBonus: 200000,
+          resonanceMultiplier: 2.5,
+          genesisMultiplier: 1.5
+        },
+        mystic: {
+          baseBonus: 500000,
+          resonanceMultiplier: 3.0,
+          genesisMultiplier: 1.5
+        }
       };
 
       // Collection bonuses (for having multiple rarities)
@@ -413,7 +613,6 @@
         const pool = Number(document.getElementById('pool').value) || 0;
         const price = Number(document.getElementById('price').value) || 0;
         const totalIQ = Number(document.getElementById('totalIQ').value) || 1;
-        const counts = getCounts();
 
         // Step-by-step calculations
         const steps = [];
@@ -428,18 +627,35 @@
            </div>
          `);
 
-        // Step 2: Calculate IQ bonuses from Relics
+        // Step 2: Calculate IQ bonuses from Individual Relics
         let totalRelicBonus = 0;
         const relicDetails = [];
 
-        order.forEach(rarity => {
-          const count = counts[rarity] || 0;
-          if (count > 0) {
-            const bonus = IQ_BONUSES[rarity] * count;
-            totalRelicBonus += bonus;
-            relicDetails.push(`${count}×${RARITY_NAMES[rarity]} (+${IQ_BONUSES[rarity].toLocaleString()} × ${count})`);
+        individualRelics.forEach(relic => {
+          const bonus = calculateRelicBonus(relic.rarity, relic.resonance, relic.isGenesis);
+          totalRelicBonus += bonus;
+
+          let detail = `${RARITY_NAMES[relic.rarity]} (+${RELIC_TYPES[relic.rarity].baseBonus.toLocaleString()})`;
+          if (relic.resonance > 0) {
+            detail += ` × (1 + ${relic.resonance}/1000 × ${RELIC_TYPES[relic.rarity].resonanceMultiplier})`;
           }
+          if (relic.isGenesis) {
+            detail += ` × ${RELIC_TYPES[relic.rarity].genesisMultiplier} (Genesis)`;
+          }
+          detail += ` = +${Math.round(bonus).toLocaleString()}`;
+          relicDetails.push(detail);
         });
+
+        // Update individual relic bonus displays after DOM is rendered
+        setTimeout(() => {
+          individualRelics.forEach(relic => {
+            const bonus = calculateRelicBonus(relic.rarity, relic.resonance, relic.isGenesis);
+            const bonusElement = document.getElementById(`bonus_${relic.id}`);
+            if (bonusElement) {
+              bonusElement.textContent = `+${Math.round(bonus).toLocaleString()} IQ`;
+            }
+          });
+        }, 0);
 
         if (relicDetails.length > 0) {
           steps.push(`
@@ -462,15 +678,22 @@
         }
 
         // Step 3: Collection bonus
-        const collectionBonus = getCollectionBonus(counts);
-        const rarityCount = countRarities(counts);
+        const ownedRarities = [...new Set(individualRelics.map(r => r.rarity))].length;
+        let collectionBonus = 0;
+        if (ownedRarities >= 2) {
+          if (ownedRarities >= 6) collectionBonus = COLLECTION_BONUSES.six_rarities;
+          else if (ownedRarities >= 5) collectionBonus = COLLECTION_BONUSES.five_rarities;
+          else if (ownedRarities >= 4) collectionBonus = COLLECTION_BONUSES.four_rarities;
+          else if (ownedRarities >= 3) collectionBonus = COLLECTION_BONUSES.three_rarities;
+          else collectionBonus = COLLECTION_BONUSES.two_rarities;
+        }
 
         if (collectionBonus > 0) {
           steps.push(`
              <div class="calc-step">
                <span class="calc-step-number">3️⃣</span>
                <span class="calc-step-title">Collection bonus</span><br>
-               <span class="calc-step-formula">${rarityCount} different rarities detected</span><br>
+               <span class="calc-step-formula">${ownedRarities} different rarities detected</span><br>
                <span class="calc-step-value">= +${collectionBonus.toLocaleString()}</span>
              </div>
            `);
@@ -479,7 +702,7 @@
              <div class="calc-step">
                <span class="calc-step-number">3️⃣</span>
                <span class="calc-step-title">Collection bonus</span><br>
-               <span class="calc-step-formula">${rarityCount} different rarities (need 2+ for bonus)</span><br>
+               <span class="calc-step-formula">${ownedRarities} different rarities (need 2+ for bonus)</span><br>
                <span class="calc-step-value">= +0</span>
              </div>
            `);
@@ -530,14 +753,138 @@
         document.getElementById('details').style.display = 'block';
       }
 
+      // Individual Relic Management
+      let individualRelics = [];
+      let relicIdCounter = 0;
+
+      function createIndividualRelic(rarity) {
+        const relicId = `relic_${relicIdCounter++}`;
+        const relic = {
+          id: relicId,
+          rarity: rarity,
+          resonance: 0,
+          isGenesis: false
+        };
+
+        // Add to the beginning of the array (newest first)
+        individualRelics.unshift(relic);
+        renderIndividualRelics();
+        calculate();
+        return relicId;
+      }
+
+      function removeIndividualRelic(relicId) {
+        individualRelics = individualRelics.filter(r => r.id !== relicId);
+        renderIndividualRelics();
+        calculate();
+      }
+
+      function updateRelicResonance(relicId, resonance) {
+        const relic = individualRelics.find(r => r.id === relicId);
+        if (relic) {
+          relic.resonance = parseInt(resonance);
+          // Update resonance display
+          const resonanceElement = document.getElementById(`resonance_${relicId}`);
+          if (resonanceElement) {
+            resonanceElement.textContent = resonance;
+          }
+          updateRelicBonus(relicId);
+          calculate();
+        }
+      }
+
+      function updateRelicGenesis(relicId, isGenesis) {
+        const relic = individualRelics.find(r => r.id === relicId);
+        if (relic) {
+          relic.isGenesis = isGenesis;
+          updateRelicBonus(relicId);
+          calculate();
+        }
+      }
+
+      function updateRelicBonus(relicId) {
+        const relic = individualRelics.find(r => r.id === relicId);
+        if (relic) {
+          const bonus = calculateRelicBonus(relic.rarity, relic.resonance, relic.isGenesis);
+          const bonusElement = document.getElementById(`bonus_${relicId}`);
+          if (bonusElement) {
+            bonusElement.textContent = `+${Math.round(bonus).toLocaleString()} IQ`;
+          }
+        }
+      }
+
+      function renderIndividualRelics() {
+        const container = document.getElementById('individual-relics');
+        container.innerHTML = '';
+
+        individualRelics.forEach(relic => {
+          const bonus = calculateRelicBonus(relic.rarity, relic.resonance, relic.isGenesis);
+          const relicElement = document.createElement('div');
+          relicElement.className = 'individual-relic';
+          relicElement.innerHTML = `
+            <div class="relic-info">
+              <img src="asset/${relic.rarity}.png" alt="${relic.rarity} Relic" class="relic-image">
+              <div class="relic-name">${RARITY_NAMES[relic.rarity]}</div>
+            </div>
+            <div class="relic-controls">
+              <div class="relic-control">
+                <div class="control-label">Resonance (0-1000)</div>
+                <input type="range" min="0" max="1000" value="${relic.resonance}" 
+                       oninput="updateRelicResonance('${relic.id}', this.value); 
+                                this.nextElementSibling.textContent = this.value;">
+                <div class="resonance-value" id="resonance_${relic.id}">${relic.resonance}</div>
+              </div>
+              <div class="relic-control">
+                <div class="control-label">Genesis</div>
+                <label style="cursor: pointer;">
+                  <input type="checkbox" ${relic.isGenesis ? 'checked' : ''} 
+                         onchange="updateRelicGenesis('${relic.id}', this.checked)">
+                </label>
+              </div>
+              <div class="relic-control">
+                <div class="control-label">Bonus</div>
+                <div class="relic-bonus" id="bonus_${relic.id}">+${Math.round(bonus).toLocaleString()} IQ</div>
+              </div>
+              <button class="remove-relic" onclick="removeIndividualRelic('${relic.id}')">Remove</button>
+            </div>
+          `;
+          container.appendChild(relicElement);
+        });
+      }
+
+      // Calculate individual relic bonus with resonance and genesis
+      function calculateRelicBonus(rarity, resonance, isGenesis) {
+        const relic = RELIC_TYPES[rarity];
+        let bonus = relic.baseBonus;
+
+        // Apply resonance multiplier
+        if (resonance > 0) {
+          bonus *= (1 + (resonance / 1000) * relic.resonanceMultiplier);
+        }
+
+        // Apply genesis multiplier
+        if (isGenesis) {
+          bonus *= relic.genesisMultiplier;
+        }
+
+        return bonus;
+      }
+
       function reset() {
         document.getElementById('userIQ').value = '100000';
         document.getElementById('pool').value = '200000000';
         document.getElementById('price').value = '0.25';
         document.getElementById('totalIQ').value = '100000000000';
-        ['common', 'rare', 'epic', 'legendary', 'ancient', 'mystic'].forEach(id => {
-          document.getElementById(id).value = '0';
+
+        // Reset count selectors
+        ['common', 'rare', 'epic', 'legendary', 'ancient', 'mystic'].forEach(rarity => {
+          document.getElementById(`${rarity}-count`).value = '0';
         });
+
+        // Clear individual relics
+        individualRelics = [];
+        renderIndividualRelics();
+
         document.getElementById('result').innerHTML = `
         <div class="big-result">—</div>
         <div class="muted">Configure your parameters and click "Calculate"</div>
@@ -564,13 +911,24 @@
         });
       }
 
-      // Add event listeners to all relic inputs
-      order.forEach(rarity => {
-        const input = document.getElementById(rarity);
-        if (input) {
-          input.addEventListener('input', () => {
-            updateCounters();
-            calculate();
+      // Add event listeners for count selectors
+      ['common', 'rare', 'epic', 'legendary', 'ancient', 'mystic'].forEach(rarity => {
+        const countInput = document.getElementById(`${rarity}-count`);
+        if (countInput) {
+          countInput.addEventListener('input', (e) => {
+            const currentCount = parseInt(e.target.value) || 0;
+            const currentRelicsOfType = individualRelics.filter(r => r.rarity === rarity).length;
+
+            if (currentCount > currentRelicsOfType) {
+              // Add new relics
+              for (let i = 0; i < currentCount - currentRelicsOfType; i++) {
+                createIndividualRelic(rarity);
+              }
+            } else if (currentCount < currentRelicsOfType) {
+              // Remove excess relics
+              const relicsToRemove = individualRelics.filter(r => r.rarity === rarity).slice(currentCount);
+              relicsToRemove.forEach(relic => removeIndividualRelic(relic.id));
+            }
           });
         }
       });
@@ -580,6 +938,14 @@
       document.getElementById('reset').addEventListener('click', () => {
         reset();
         updateCounters();
+      });
+
+      // Auto-calculate for main parameters
+      ['userIQ', 'pool', 'price', 'totalIQ'].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('input', calculate);
+        }
       });
 
       // Initialize counters and calculate

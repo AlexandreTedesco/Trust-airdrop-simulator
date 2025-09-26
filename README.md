@@ -20,11 +20,11 @@ Interactive simulator for the Vibe Coding Contest - Calculate your potential $TR
 4. **Final tokens** = (Effective IQ ÷ Total IQ) × Pool
 
 ### Relic Bonuses
-- 🔹 **Common**: +10k IQ
-- 🟦 **Rare**: +20k IQ  
-- 🔮 **Epic**: +50k IQ
-- 💠 **Legendary**: +100k IQ
-- 🌋 **Ancient**: +200k IQ
+- ✨  **Common**: +10k IQ
+- ✨  **Rare**: +20k IQ  
+- ✨  **Epic**: +50k IQ
+- ✨  **Legendary**: +100k IQ
+- ✨  **Ancient**: +200k IQ
 - ✨ **Mystic**: +500k IQ
 
 ### Collection Bonuses
