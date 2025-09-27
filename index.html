@@ -885,7 +885,7 @@
         document.getElementById('result').innerHTML = `
         <div class="big-result">${tokens.toLocaleString(undefined, { maximumFractionDigits: 2 })} TRUST</div>
         <div style="font-size: 18px; color: #10b981; margin: 10px 0;">$${usd.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
-        <div class="muted">Effective IQ: ${effectiveIQ.toLocaleString()} | Bonus: x${(totalRelicBonus + collectionBonus).toLocaleString()}</div>
+         <div class="muted">Effective IQ: ${effectiveIQ.toLocaleString()} | Bonus: ${currentMode === 'bonus' ? '+' : 'x'}${(totalRelicBonus + collectionBonus).toLocaleString()}</div>
      `;
 
         // Display details
