@@ -840,6 +840,23 @@
                <span class="calc-step-value">= ${Math.round(effectiveIQ).toLocaleString()}</span>
              </div>
            `);
+
+          // Add coefficient details
+          if (individualRelics.length > 0) {
+            const multiplierDetails = individualRelics.map(relic => {
+              const multiplier = calculateRelicBonus(relic.rarity, relic.resonance, relic.isGenesis);
+              return `${RARITY_NAMES[relic.rarity]} (${multiplier.toFixed(3)}x)`;
+            }).join(' × ');
+
+            steps.push(`
+               <div class="calc-step">
+                 <span class="calc-step-number">4️⃣.1</span>
+                 <span class="calc-step-title">Multiplier breakdown</span><br>
+                 <span class="calc-step-formula">${multiplierDetails}</span><br>
+                 <span class="calc-step-value">= ${totalMultiplier.toFixed(3)}x total</span>
+               </div>
+             `);
+          }
         }
 
         // Step 5: Calculate tokens
@@ -868,7 +885,7 @@
         document.getElementById('result').innerHTML = `
         <div class="big-result">${tokens.toLocaleString(undefined, { maximumFractionDigits: 2 })} TRUST</div>
         <div style="font-size: 18px; color: #10b981; margin: 10px 0;">$${usd.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
-        <div class="muted">Effective IQ: ${effectiveIQ.toLocaleString()} | Bonus: +${(totalRelicBonus + collectionBonus).toLocaleString()}</div>
+        <div class="muted">Effective IQ: ${effectiveIQ.toLocaleString()} | Bonus: x${(totalRelicBonus + collectionBonus).toLocaleString()}</div>
      `;
 
         // Display details
