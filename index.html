@@ -391,11 +391,11 @@
         style='display: flex; align-items: center; gap: 15px; margin: 20px 0; padding: 15px; background: rgba(30, 41, 59, 0.8); border-radius: 10px; border-left: 4px solid #10b981;'>
         <span style='color: #cbd5e1; font-weight: bold;'>Mode:</span>
         <label style='display: flex; align-items: center; gap: 8px; cursor: pointer;'>
-          <input type='radio' name='mode' value='bonus' checked onchange='switchMode(this.value)'>
+          <input type='radio' name='mode' value='bonus' onchange='switchMode(this.value)'>
           <span style='color: #10b981;'>🎯 Bonus Mode</span>
         </label>
         <label style='display: flex; align-items: center; gap: 8px; cursor: pointer;'>
-          <input type='radio' name='mode' value='multiplier' onchange='switchMode(this.value)'>
+          <input type='radio' name='mode' value='multiplier' checked onchange='switchMode(this.value)'>
           <span style='color: #7c3aed;'>⚡ Multiplier Mode</span>
         </label>
       </div>
@@ -605,7 +605,7 @@
     </div>
     <script>
       // Mode switch functionality
-      let currentMode = 'bonus';
+      let currentMode = 'multiplier';
 
       function switchMode(mode) {
         currentMode = mode;
